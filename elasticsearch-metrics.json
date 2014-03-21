@@ -1,0 +1,8 @@
+{
+  "elasticsearch-metrics": {
+    "host": "localhost",
+    "port": 9200,
+    "index": "sensu-metrics",
+    "type": "metrics"
+  }
+}
