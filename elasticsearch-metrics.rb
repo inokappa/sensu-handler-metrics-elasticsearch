@@ -48,7 +48,7 @@ class Elasticsearch < Sensu::Handler
      metrics ={}
      @event['check']['output'].split("\n").each do |line|
        v = line.split("\t")
-       if /percentage/ =~ v[0]
+       if /percentage|five/ =~ v[0]
          metrics = {
             :@timestamp => time_stamp,
             :client => @event['client']['name'],
