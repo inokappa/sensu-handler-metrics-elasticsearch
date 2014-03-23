@@ -9,7 +9,7 @@ require 'timeout'
 require 'digest/md5'
 require 'date'
 
-class Elasticsearch < Sensu::Handler
+class ElasticsearchMetrics < Sensu::Handler
   def host
     settings['elasticsearch-metrics']['host'] || 'localhost'
   end
