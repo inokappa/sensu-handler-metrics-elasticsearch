@@ -19,11 +19,7 @@ class ElasticsearchMetrics < Sensu::Handler
   end
 
   def es_index
-    settings['elasticsearch-metrics']['index'] || 'sensu-metrics'
-  end
-
-  def es_type
-    settings['elasticsearch-metrics']['type'] || 'metrics'
+    @event['check']['name'] || 'sensu-metrics'
   end
 
   def es_id
@@ -48,7 +44,7 @@ class ElasticsearchMetrics < Sensu::Handler
      metrics ={}
      @event['check']['output'].split("\n").each do |line|
        v = line.split("\t")
-       if /percentage|five/ =~ v[0]
+       #if /percentage|five/ =~ v[0]
          metrics = {
             :@timestamp => time_stamp,
             :client => @event['client']['name'],
@@ -68,7 +64,9 @@ class ElasticsearchMetrics < Sensu::Handler
              request.body = JSON.dump(metrics)
 
              response = http.request(request)
-             if response.code == '200'
+             if response.code == '200|201'
+               puts "request metrics #=> #{metrics}"
+               puts "request body #=> #{response.body}"
                puts "elasticsearch post ok."
              else
                puts "request metrics #=> #{metrics}"
@@ -79,7 +77,7 @@ class ElasticsearchMetrics < Sensu::Handler
          rescue Timeout::Error
            puts "elasticsearch timeout error."
          end
-       end
+       #end
     end
   end
 end
