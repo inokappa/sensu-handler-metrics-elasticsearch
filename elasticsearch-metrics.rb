@@ -19,11 +19,7 @@ class ElasticsearchMetrics < Sensu::Handler
   end
 
   def es_index
-    settings['elasticsearch-metrics']['index'] || 'sensu-metrics'
-  end
-
-  def es_type
-    settings['elasticsearch-metrics']['type'] || 'metrics'
+    @event['check']['name'] || 'sensu-metrics'
   end
 
   def es_id
